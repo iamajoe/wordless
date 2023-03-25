@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  wordlessredis:
+    container_name: wordlessredis
+    image: redis:7.0.10-alpine
+    environment:
+      REDIS_PASSWORD: redis
+    ports:
+      - '6379:6379'
+    command: redis-server --save 120 1 --loglevel warning --requirepass $$REDIS_PASSWORD
+    volumes: 
+      - ./docker/rediscache:/data
+
+  wordlessredis_test:
+    container_name: wordlessredis_test
+    image: redis:7.0.10-alpine
+    ports:
+      - '6380:6379'
+    command: redis-server --loglevel warning 
