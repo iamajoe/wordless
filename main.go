@@ -23,6 +23,6 @@ func main() {
 	}
 	defer repos.Close()
 
-	r := server.GetRouter(config.AuthSecret, repos)
+	r := server.GetRouter(repos)
 	server.InitServer(":"+config.Port, r)
 }

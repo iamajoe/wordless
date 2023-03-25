@@ -53,7 +53,7 @@ func GetParamID(r *http.Request, param string) (int, error) {
 	return id, nil
 }
 
-func GetAPIRouter(r *chi.Mux, authSecret string, repos entity.Repositories) {
+func GetAPIRouter(r *chi.Mux, repos entity.Repositories) {
 	r.Route("/api", func(r chi.Router) {
 		r.Use(middleware.RequestID)
 		r.Use(middleware.Logger)
@@ -88,9 +88,9 @@ func GetStaticRouter(r *chi.Mux) {
 	})
 }
 
-func GetRouter(authSecret string, repos entity.Repositories) *chi.Mux {
+func GetRouter(repos entity.Repositories) *chi.Mux {
 	r := chi.NewRouter()
-	GetAPIRouter(r, authSecret, repos)
+	GetAPIRouter(r, repos)
 	GetStaticRouter(r)
 
 	return r

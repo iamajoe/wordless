@@ -1,16 +1,12 @@
 package config
 
 import (
-	"fmt"
-	"math/rand"
 	"os"
 	"strings"
-	"time"
 )
 
 type config struct {
 	Env         string
-	AuthSecret  string
 	Port        string
 	RedisHost   string
 	RedisSecret string
@@ -37,12 +33,6 @@ func Get(getenv func(string) string) (config, error) {
 		env = EnvDevelopment
 	}
 
-	authSecret := getenv("AUTH_SECRET")
-	if authSecret == "" {
-		rand.Seed(time.Now().Unix())
-		authSecret = fmt.Sprintf("%d", rand.Intn(100000000))
-	}
-
 	port := getenv("PORT")
 	if len(port) == 0 {
 		port = "4040"
@@ -64,7 +54,6 @@ func Get(getenv func(string) string) (config, error) {
 
 	return config{
 		Env:         env,
-		AuthSecret:  authSecret,
 		Port:        port,
 		RedisHost:   redisHost,
 		RedisSecret: redisSecret,
